@@ -1,8 +1,7 @@
-import socket, os
-import time
+import socket
 
 
-host = '10.0.15.105'
+host = '127.0.0.1'
 porta = 8000
 
 clienteTCP = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -16,15 +15,19 @@ for teste in testes:
     clienteTCP.send(teste.encode())
 
 percaTCP = clienteTCP.recv(1024).decode()
+percaTCP = float(percaTCP)
 print(percaTCP)
 latenciaTCP = clienteTCP.recv(1024).decode()
+latenciaTCP = float(latenciaTCP)
 
 
 for teste in testes:
     clienteUDP.sendto('teste'.encode(), (host, porta))
 
 percaUDP = clienteUDP.recv(1024).decode()
+percaUDP = float(percaUDP)
 latenciaUDP = clienteUDP.recv(1025).decode()
+latenciaUDP = float(latenciaUDP)
 
 
 img = open('C:\\Users\\FILIPE~1\\Documents\\ShareApp\\tcp\\origem\\miranha.jpg', 'rb')
