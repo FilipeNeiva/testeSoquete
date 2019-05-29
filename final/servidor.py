@@ -5,12 +5,12 @@ host = ''
 porta = 8000
 
 tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+#udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 tcp.bind((host, porta))
 tcp.listen(5)
 
-udp.bind((host, porta))
+#udp.bind((host, porta))
 
 print('Ouvindo data em %s:%d' %(host,porta))
 
@@ -34,29 +34,32 @@ while True:
     vazaoTCP = (1000/latenciaTCP)
     perdaTCP = (5 * erro) / 100
 
+    print(latenciaTCP)
+    print(perdaTCP)
+
     conection.send(('%f' % latenciaTCP).encode())
     conection.send(('%f' % perdaTCP).encode())
 
-    teste = []
-    erro = 0
-
-    start = time.perf_counter() * 1000
-
-    for i in range(0, 4, 1):
-        try:
-            teste.append(udp.recv(1024))
-        except:
-            erro += 1
-
-    end = time.perf_counter() * 1000
-    latenciaUDP = end - start
-    vazaoUDP = (1000 / latenciaUDP)
-    perdaUDP = (5 * erro) / 100
-
-
-
-    udp.sendto(('%f' % latenciaUDP).encode(), cliente)
-    udp.sendto(('%f' % perdaTCP).encode(), cliente)
+    # teste = []
+    # erro = 0
+    #
+    # start = time.perf_counter() * 1000
+    #
+    # for i in range(0, 4, 1):
+    #     try:
+    #         teste.append(udp.recv(1024))
+    #     except:
+    #         erro += 1
+    #
+    # end = time.perf_counter() * 1000
+    # latenciaUDP = end - start
+    # vazaoUDP = (1000 / latenciaUDP)
+    # perdaUDP = (5 * erro) / 100
+    #
+    #
+    #
+    # udp.sendto(('%f' % latenciaUDP).encode(), cliente)
+    # udp.sendto(('%f' % perdaTCP).encode(), cliente)
 
     print('Conexão recebida por: %s:%d' % (cliente[0], cliente[1]))
 
