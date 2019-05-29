@@ -24,22 +24,12 @@ while True:
     while (data[-4:] != "\n\r##".encode()):
         total_partes += 1
         try:
-            inicio = time.time() * 1000
             data += client_tcp.recv(1024)
-            latencia = (time.time() * 1000) - inicio
-            tempo_total += latencia
         except:
             erros += 1
 
-    velocidade_bytes = (1000 / tempo_total) * (1024 * total_partes)
     perda = ((total_partes * erros) / 100)
 
-    if (velocidade_bytes > 1000000):
-        velocidade = '%.2f MB/s' % ((velocidade_bytes / 1000) / 1000)
-    else:
-        velocidade = '%.2f KB/s' % (velocidade_bytes / 1000)
-
-    print('Vazão: %s Latência: %.3f ms (%.2f%% de perda)' % (velocidade, tempo_total, perda))
 
     img = open('img_out.jpg', 'wb')
     img.write(data)
